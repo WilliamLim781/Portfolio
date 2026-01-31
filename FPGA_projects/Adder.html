@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCB Portfolio</title>
+    <link rel="stylesheet" type ="text/css"href="../style.css">
+</head>
+<body>
+<header> 
+    <h1>Adder</h1>
+</header>
+<main>
+    <section>
+        <h2> Ripple Carry Adder</h2>
+            <h2>design</h2>
+            <p>
+                starts with the design on a simple full-adder that is turned into a module that can be connected in a linear fashion to create a ripple carry adder below you can see
+                a snippet of the code for how I made the module for a single Full adder module
+            </p>
+            <pre><code>
+                    entity Full_adder is
+                    Port (  i_A : in STD_LOGIC;
+                            i_B : in STD_LOGIC;
+                            i_Cin : in STD_LOGIC;
+                            o_Cout : out STD_LOGIC;
+                            o_S : out STD_LOGIC);
+                    end Full_adder;
+
+                    architecture Behavioral of Full_adder is
+                    begin
+
+                    o_S &lt;= i_A xor i_B xor i_Cin;
+                    o_Cout  &lt;= (i_A AND i_B) OR (i_Cin AND(i_A XOR i_B));
+
+                    end Behavioral;
+            </code></pre>
+            <p>
+                the module contains both the boolean logic for the sum of the full adder(o_S) and the Carry out(o_Cout). With this simple module created, A ripple carry adder of size N can be created by "daisy chaining"
+                this modules together to achieve the desired ripple carry adder. The code below demonstrates how I used the simple FA module and chained them to create a 64 bit ripple carry adder
+
+            </p>
+
+            <pre><code>
+entity 64Bit_FA is
+    generic(
+        ADDER_SIZE: integer := 64
+    );
+    Port ( i_A     : in  STD_LOGIC_VECTOR(ADDER_SIZE - 1  downto 0);
+           i_B     : in  STD_LOGIC_VECTOR(ADDER_SIZE - 1 downto 0);
+           o_S     : out STD_LOGIC_VECTOR(ADDER_SIZE     downto 0)
+          );
+end EightBit_FA;
+
+architecture Behavioral of EightBit_FA is
+    signal carry : STD_LOGIC_VECTOR(ADDER_SIZE downto 0);
+begin
+
+carry(0) &lt;= '0';
+
+FA_64Bit : for i in 0 to ADDER_SIZE - 1  generate
+    FA_inst: entity work.Full_adder
+        port map(
+            i_A   => i_A(i),
+            i_B   => i_B(i),
+            i_Cin => carry(i),
+            o_S   => o_S(i),
+            o_Cout => carry(i + 1)
+        );
+    end generate FA_8Bit;
+    
+o_S(ADDER_SIZE) &lt;= carry(ADDER_SIZE);
+
+end Behavioral;
+            </code></pre>
+
+        <h2>testing</h2>
+            <p>
+                The simplest way to test the Adder was to give it every possible combination of values to add and see what the output was. However the issue with a 64 bit adder is that there are too many possbile combination and you cannot test them All
+                so a smaller subset of numbers where tested and their results where checked to make sure they were correct. Ripple carry adders are repetitive circuits so their behaviors should be similar regardless of their size. The snippet of code below
+                demonstrates how I tested a subset of values with the ripple carry adder circuit
+            </p>
+        <pre><code>
+ architecture Behavioral of EightBit_FA_TB is
+    signal r_In1, r_In2 : std_logic_vector (63 downto 0);
+    signal w_out        : std_logic_vector (64 downto 0);
+begin
+
+UUT: entity work.EightBit_FA
+port map(
+    i_A => r_In1,
+    i_B => r_In2,
+    o_S => w_out
+);
+
+process is 
+begin 
+
+for i in 255 to 510 loop
+    for j in 255 to 510 loop  
+        r_In1 &lt;= std_logic_vector(TO_UNSIGNED(i,64));
+        r_In2 &lt;= std_logic_vector(TO_UNSIGNED(j,64));
+        wait for 10 ps; -- time for propagation
+        assert unsigned(w_out) = i + j
+            severity failure;
+    end loop;
+end loop;
+
+report " all 65536 combinations passed!" severity note;
+wait; -- end simulation 
+end process;
+end Behavioral;
+        </code></pre>
+            <p>
+                Basically I just used a for loop to loop throught some numbers convert that into a "STD_LOGIC_VECTOR" for the inputs of the full. Then computed the results with  "i + J" and compared that result with
+                the output of the ripple carry adder by turning the output into an unsigned value.
+            </p>
+    <section>
+</main>
+
+</body>
+</html>

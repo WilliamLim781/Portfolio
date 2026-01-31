@@ -61,10 +61,12 @@ section h3{
 }
 
 .project-card {
-    background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
-    border-radius: 0.375rem; /* rounded-lg */
-    padding: 1rem; /* p-4 */
+    background-color: #09122C;
+    box-shadow: 0 15px 15px rgba(255, 255, 255, 0.1); /* shadow-md */
+    /*border-radius: 0.375rem; *//* rounded-lg */
+    padding: 3rem; /* p-4 */
+    border-style: groove;
+    border-color: #09122C;
     
 }
 
@@ -103,4 +105,41 @@ summary{
     margin-left: auto;
     margin-right: auto;
     border-radius: 0.5rem;
+}
+
+.accordion{
+  background-color:#2563eb;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+  font-size: 3.25rem;
+  border-radius: 15px;
+}
+
+.active, .accordion:hover{
+    background-color: #6f96ea;
+}
+
+.panel{
+  padding: 0 18px;
+  background-color: #09122C;
+  display: none;
+  overflow: hidden;
+}
+
+pre {
+  background: #1e1e1e;
+  color: #dcdcdc;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+code {
+  font-family: 'Courier New', Courier, monospace;
 }

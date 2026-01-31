@@ -1,2 +1,2 @@
-# PCB-portfolio
-portfolio for PCB projects
+# portfolio
+portfolio for projects

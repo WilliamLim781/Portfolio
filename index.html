@@ -9,42 +9,75 @@
 </head>
 <body>
     <header>
-        <h1>My PCB Design Portfolio</h1>
+        <h1>My Portfolio</h1>
         <p>Showcasing some of my projects</p>
     </header>   
     <main>
         <section>
             <h2>Projects</h2>
-            <div class="grid">
-                <a href="DAQ.html">
+            <button class = "accordion">PCB Projects</button>
+            <div class="panel">
+                <a href="PCB_projects/DAQ.html">
                     <div class="project-card">
                         <img src="images/DAQ.PNG" alt="DAQ" class="rounded center aspect-w-4 aspect-h-3" height="500px" width = "1000px">
                         <h3>DAQ</h3> 
                     </div>
                  </a>
-                <a href="DistortionPedal.html">
+                <a href="PCB_projects/DistortionPedal.html">
                     <div class="project-card">
                         <img src="images/DIST_PCB_pic.PNG" alt="Distortion Pedal" class="rounded center aspect-w-4 aspect-h-3" height="500px" width="1000px">
                         <h3>Distortion Pedal </h3>
                     </div>
                 </a>
-                <a href="wienBridge.html">
+                <a href="PCB_projects/wienBridge.html">
                     <div class="project-card">
                         <img src="images/DIST_PCB_pic.PNG" alt="Wien-Bridge" class="rounded center aspect-w-4 aspect-h-3" height="500px" width="1000px">
                         <h3> Wien-Bridge </h3>
                     </div>
                 </a>
-                <a href="keyboard.html">
+                <a href="PCB_projects/keyboard.html">
                     <div class="project-card">
                         <img src="images/KB_PCB.PNG" alt="keyboard" class="rounded center aspect-w-4 aspect-h-3" height="500px" width="1000px">
                         <h3> keyboard </h3>
                     </div>
                 </a>
+                <a href="Adder.html">
+                    <div class="project-card">
+                        <img src="images/DAQ.PNG" alt="DAQ" class="rounded center aspect-w-4 aspect-h-3" height="500px" width = "1000px">
+                        <h3>test</h3> 
+                    </div>
+                 </a>                
+            </div>
+            <button class = "accordion">FPGA projects</button>
+            <div class="panel">
+                 <a href="FPGA_projects/Adder.html">
+                    <div class="project-card">
+                        <img src="images/DAQ.PNG" alt="DAQ" class="rounded center aspect-w-4 aspect-h-3" height="500px" width = "1000px">
+                        <h3>Adder</h3> 
+                    </div>
+                 </a>               
             </div>
         </section>
     </main>    
     <footer>
         <p>© 2025 William Lim | <a href="https://github.com/WilliamLim781">GitHub</a></p>
     </footer>
+
+    <script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+</script>
 </body>
 </html>
